@@ -147,7 +147,7 @@ calculadora-adoquines/
     └── imagenes/                   # Figuras de la documentación
 ```
 
-![Figura 2. Estructura de archivos del proyecto](imagenes/estructura_archivos.svg)
+![Figura 2. Estructura de archivos del proyecto](https://github.com/DavidJauregu123/Proyecto_adoquines/blob/main/visual%20studio%20code.jpeg?raw=true)
 
 *Figura 2. Estructura de archivos y responsabilidad de cada componente.*
 
@@ -180,7 +180,7 @@ El sistema admite seis geometrías de terreno. La tabla 1 resume los parámetros
 | Trapecio | base mayor, base menor, altura | A = ((B + b) / 2) · altura |
 | Media luna | diámetro | A = (π · (diámetro / 2)²) / 2 |
 
-![Figura 3. Formas de zona disponibles](imagenes/formas_zona.png)
+![Figura 3. Formas de zona disponibles](https://github.com/DavidJauregu123/Proyecto_adoquines/blob/main/terrenos.jpeg?raw=true)
 
 *Figura 3. Las seis formas de terreno admitidas.*
 
@@ -207,7 +207,7 @@ Se admiten doce formas de pieza, resueltas por la función `area_pieza()`.
 
 Tres casos merecen precisión técnica. El **hexágono regular** no se calcula como producto de dimensiones, sino con la fórmula (3√3/2)·lado². El **abanico** (escama de pez) se instala con un traslape aproximado del 50 % entre hileras, por lo que su cobertura efectiva equivale a la mitad de su rectángulo envolvente; la fórmula ya incorpora este factor. Las **formas entrelazadas** (doble T, doble S, llave, gaviota, puzzle, celosía) teselan el plano sin huecos, de modo que su cobertura equivale a la de su celda rectangular o cuadrada de repetición.
 
-![Figura 4. Formas de adoquín disponibles](imagenes/formas_adoquin.png)
+![Figura 4. Formas de adoquín disponibles](https://github.com/DavidJauregu123/Proyecto_adoquines/blob/main/figuras.jpeg?raw=true)
 
 *Figura 4. Las doce formas de adoquín admitidas.*
 
@@ -223,7 +223,7 @@ piezas_extra         = cantidad_recomendada − cantidad_minima
 
 La regla central del modelo es el **redondeo único**: el desperdicio se aplica sobre la cantidad exacta (con decimales) y el redondeo hacia arriba se ejecuta una sola vez, al final de cada expresión. Con ello se evita el error acumulado que produciría redondear primero la división y aplicar después el porcentaje sobre un valor ya inflado. Para el caso de referencia (área de 10.05 m², pieza de 0.02 m², desperdicio del 10 %), el método corregido arroja 553 piezas frente a las 554 del método con doble redondeo.
 
-![Figura 5. Comparación entre el método con doble redondeo y el método corregido](imagenes/calculo_antes_despues.svg)
+![Figura 5. Comparación entre el método con doble redondeo y el método corregido](https://github.com/DavidJauregu123/Proyecto_adoquines/blob/main/resultados.jpeg?raw=true)
 
 *Figura 5. Efecto de la política de redondeo único sobre el resultado.*
 
@@ -288,7 +288,7 @@ Cada forma de adoquín habilita únicamente los patrones geométricamente compat
 | Puzzle | Puzzle | 10 % |
 | Abanico | Abanico | 15 % |
 
-![Figura 6. Lámina de patrones de colocación clásicos](imagenes/patrones.png)
+![Figura 6. Lámina de patrones de colocación clásicos](https://github.com/DavidJauregu123/Proyecto_adoquines/blob/main/patrones.png?raw=true)
 
 *Figura 6. Patrones clásicos para piezas rectangulares, cuadradas y hexagonales.*
 
