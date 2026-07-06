@@ -111,7 +111,7 @@ El sistema sigue una arquitectura cliente–servidor de dos capas. El **frontend
 
 Ambas capas se comunican mediante peticiones HTTP con cuerpo JSON a través del endpoint `POST /api/calcular`.
 
-![Figura 1. Flujo de datos entre el navegador y el servidor Flask](imagenes/flujo_datos.svg)
+![Figura 1. Flujo de datos entre el navegador y el servidor Flask](https://github.com/DavidJauregu123/Proyecto_adoquines/blob/main/WhatsApp%20Image%202026-07-06%20at%2010.27.45%20AM.jpeg?raw=true)
 
 *Figura 1. Arquitectura y flujo de datos del sistema.*
 
