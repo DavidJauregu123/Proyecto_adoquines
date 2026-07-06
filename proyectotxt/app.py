@@ -178,6 +178,47 @@ def leer_zona(z_raw, unidad_area, num):
         bbox = {"largo": dims_m["diametro"], "ancho": r}
         zona_m = {"diametro": dims_m["diametro"]}
 
+    elif forma == "ele":
+        largo = a_numero_positivo(z_raw.get("zona_largo"), "largo " + n)
+        ancho = a_numero_positivo(z_raw.get("zona_ancho"), "ancho " + n)
+        corte_largo = a_numero_positivo(z_raw.get("zona_corte_largo"), "corte largo " + n)
+        corte_ancho = a_numero_positivo(z_raw.get("zona_corte_ancho"), "corte ancho " + n)
+        dims_m = dims_a_metros(
+            {"largo": largo, "ancho": ancho, "corte_largo": corte_largo, "corte_ancho": corte_ancho},
+            unidad_area,
+        )
+        if dims_m["corte_largo"] >= dims_m["largo"] or dims_m["corte_ancho"] >= dims_m["ancho"]:
+            raise ValueError("El corte de la forma en L " + n + " no puede ser igual o más grande que el terreno.")
+        area = dims_m["largo"] * dims_m["ancho"] - dims_m["corte_largo"] * dims_m["corte_ancho"]
+        bbox = {"largo": dims_m["largo"], "ancho": dims_m["ancho"]}
+        zona_m = dims_m
+
+    elif forma == "anillo":
+        d_ext = a_numero_positivo(z_raw.get("zona_diametro_ext"), "diámetro exterior " + n)
+        d_int = a_numero_positivo(z_raw.get("zona_diametro_int"), "diámetro interior " + n)
+        dims_m = dims_a_metros({"diametro_ext": d_ext, "diametro_int": d_int}, unidad_area)
+        if dims_m["diametro_int"] >= dims_m["diametro_ext"]:
+            raise ValueError("El diámetro interior del anillo " + n + " debe ser menor que el exterior.")
+        r_ext, r_int = dims_m["diametro_ext"] / 2.0, dims_m["diametro_int"] / 2.0
+        area = math.pi * (r_ext * r_ext - r_int * r_int)
+        bbox = {"largo": dims_m["diametro_ext"], "ancho": dims_m["diametro_ext"]}
+        zona_m = dims_m
+
+    elif forma == "ovalo":
+        ancho = a_numero_positivo(z_raw.get("zona_ancho"), "ancho " + n)
+        alto = a_numero_positivo(z_raw.get("zona_alto"), "alto " + n)
+        dims_m = dims_a_metros({"ancho": ancho, "alto": alto}, unidad_area)
+        area = math.pi * (dims_m["ancho"] / 2.0) * (dims_m["alto"] / 2.0)
+        bbox = {"largo": dims_m["ancho"], "ancho": dims_m["alto"]}
+        zona_m = dims_m
+
+    elif forma == "hexagono":
+        lado = a_numero_positivo(z_raw.get("zona_lado"), "lado " + n)
+        dims_m = dims_a_metros({"lado": lado}, unidad_area)
+        area = (3.0 * math.sqrt(3.0) / 2.0) * (dims_m["lado"] ** 2)
+        bbox = {"largo": 2.0 * dims_m["lado"], "ancho": math.sqrt(3.0) * dims_m["lado"]}
+        zona_m = {"lado": dims_m["lado"]}
+
     else:
         raise ValueError(
             "Forma de zona no reconocida en figura %d: '%s'." % (num, forma)

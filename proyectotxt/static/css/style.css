@@ -127,6 +127,8 @@ html, body {
   box-shadow: var(--shadow);
   position: sticky;
   top: 16px;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
 }
 
 .field-group {
@@ -164,7 +166,7 @@ html, body {
   margin-bottom: 6px;
 }
 
-.dims { display: flex; gap: 10px; }
+.dims { display: grid; grid-template-columns: repeat(auto-fit, minmax(84px, 1fr)); gap: 10px; }
 .field--inline { flex: 1; margin-bottom: 0; }
 
 input[type="number"] {
@@ -179,6 +181,24 @@ input[type="number"] {
   transition: border-color .15s, box-shadow .15s;
 }
 input[type="number"]:focus {
+  outline: 0;
+  border-color: var(--steel);
+  box-shadow: 0 0 0 3px rgba(63, 107, 110, .15);
+}
+
+select {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 9px 11px;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s;
+}
+select:focus {
   outline: 0;
   border-color: var(--steel);
   box-shadow: 0 0 0 3px rgba(63, 107, 110, .15);
@@ -230,6 +250,8 @@ input[type="number"]:focus {
 .shape-pick__btn svg { width: 34px; height: 34px; }
 .shape-pick__btn svg rect,
 .shape-pick__btn svg polygon,
+.shape-pick__btn svg circle,
+.shape-pick__btn svg ellipse,
 .shape-pick__btn svg path { fill: var(--ink-soft); transition: fill .15s; }
 .shape-pick__btn.is-active {
   border-color: var(--clay);
@@ -238,6 +260,8 @@ input[type="number"]:focus {
 }
 .shape-pick__btn.is-active svg rect,
 .shape-pick__btn.is-active svg polygon,
+.shape-pick__btn.is-active svg circle,
+.shape-pick__btn.is-active svg ellipse,
 .shape-pick__btn.is-active svg path { fill: var(--clay); }
 
 /* Selector de patrón (miniaturas dibujadas en canvas) */
@@ -409,6 +433,28 @@ input[type="number"]:focus {
 
 /* ===================== TOGGLE 2D / 2.5D ===================== */
 .canvas-topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+
+.view-toggle {
+  display: inline-flex;
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .15);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  gap: 3px;
+}
+.view-toggle__btn {
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, .55);
+  background: transparent;
+  border: 0;
+  border-radius: 5px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.view-toggle__btn.is-active { background: var(--white); color: var(--ink); }
 .vista-toggle { display: flex; gap: 2px; background: rgba(255,255,255,.08); border-radius: 6px; padding: 2px; }
 .vista-btn {
   padding: 3px 10px; border: none; border-radius: 4px; cursor: pointer;
@@ -455,10 +501,10 @@ input[type="number"]:focus {
 }
 .zona-card__del:hover { background: var(--clay); color: var(--white); border-color: var(--clay); }
 
-.btn-agregar-zona {
+.zona-add {
   width: 100%;
   padding: .55rem;
-  background: none;
+  background: var(--white);
   border: 1.5px dashed var(--line);
   border-radius: var(--radius-sm);
   color: var(--ink-soft);
@@ -466,9 +512,45 @@ input[type="number"]:focus {
   font-size: .85rem;
   cursor: pointer;
   transition: border-color .15s, color .15s;
-  margin-top: .2rem;
+  margin-top: .5rem;
+  position: sticky;
+  bottom: 0;
 }
-.btn-agregar-zona:hover { border-color: var(--steel); color: var(--steel); }
+.zona-add:hover { border-color: var(--steel); color: var(--steel); }
+
+.zona-resultado {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: .5rem;
+  padding-top: .5rem;
+  border-top: 1px dashed var(--line);
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.zona-resultado b { color: var(--ink); font-family: var(--font-mono); }
+.zona-resultado em { font-style: normal; color: var(--clay); margin-left: 4px; }
+
+/* Resumen por figura */
+#resumenFiguras h3 {
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+.desglose-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  border-top: 1px dashed var(--line);
+  font-size: 13px;
+}
+.desglose-tipo { color: var(--ink-soft); }
+.desglose-recomendada { font-family: var(--font-mono); color: var(--ink); white-space: nowrap; }
+.desglose-extra { color: var(--ink-soft); white-space: nowrap; }
 
 /* Secciones internas de zona extra */
 .zona-divider {

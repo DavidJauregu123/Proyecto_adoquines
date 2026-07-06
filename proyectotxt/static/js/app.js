@@ -38,7 +38,8 @@ function factorMinimoDibujo(minPx, ...dimsPx) {
   return menor < minPx ? minPx / menor : 1;
 }
 
-const _DESP_ZONA = { rectangulo: 0, cuadrado: 0, trapecio: 5, triangular: 8, circular: 12, medialuna: 15 };
+const _DESP_ZONA = { rectangulo: 0, cuadrado: 0, trapecio: 5, triangular: 8, circular: 12, medialuna: 15,
+  ele: 6, anillo: 15, ovalo: 10, hexagono: 5 };
 
 function _areaZona(forma, d, conv) {
   const m = v => (parseFloat(v) || 0) * conv;
@@ -48,6 +49,10 @@ function _areaZona(forma, d, conv) {
   if (forma === "triangular") return m(d.base) * m(d.altura) / 2;
   if (forma === "trapecio")   return (m(d.base_mayor) + m(d.base_menor)) / 2 * m(d.altura);
   if (forma === "medialuna")  return Math.PI * (m(d.diametro) / 2) ** 2 / 2;
+  if (forma === "ele")        return Math.max(0, m(d.largo) * m(d.ancho) - m(d.corte_largo) * m(d.corte_ancho));
+  if (forma === "anillo")     return Math.PI * ((m(d.diametro_ext) / 2) ** 2 - (m(d.diametro_int) / 2) ** 2);
+  if (forma === "ovalo")      return Math.PI * (m(d.ancho) / 2) * (m(d.alto) / 2);
+  if (forma === "hexagono")   return (3 * Math.sqrt(3) / 2) * m(d.lado) ** 2;
   return 0;
 }
 
@@ -102,6 +107,10 @@ const IC = {
   z_triangular: '<svg viewBox="0 0 40 40"><polygon points="20,7 34,31 6,31"/></svg>',
   z_trapecio:   '<svg viewBox="0 0 40 40"><polygon points="6,30 34,30 27,12 13,12"/></svg>',
   z_medialuna:  '<svg viewBox="0 0 40 40"><path d="M6 15 A16 16 0 0 0 34 15 Z"/></svg>',
+  z_ele:        '<svg viewBox="0 0 40 40"><polygon points="7,7 24,7 24,18 33,18 33,33 7,33"/></svg>',
+  z_anillo:     '<svg viewBox="0 0 40 40"><path fill-rule="evenodd" d="M20,5 a15,15 0 1,0 0.1,0 Z M20,14 a6,6 0 1,1 -0.1,0 Z"/></svg>',
+  z_ovalo:      '<svg viewBox="0 0 40 40"><ellipse cx="20" cy="20" rx="16" ry="10"/></svg>',
+  z_hexagono:   '<svg viewBox="0 0 40 40"><polygon points="20,6 33,13 33,27 20,34 7,27 7,13"/></svg>',
 };
 
 /* -------------------------------------------------------------------------
@@ -120,6 +129,14 @@ const FORMAS_ZONA = {
     campos: [ {k:"base_mayor", et:"Base mayor", def:6}, {k:"base_menor", et:"Base menor", def:3}, {k:"altura", et:"Altura", def:4} ] },
   medialuna:  { nombre: "Media luna", icon: IC.z_medialuna,
     campos: [ {k:"diametro", et:"Diámetro", def:6} ] },
+  ele:        { nombre: "Forma L", icon: IC.z_ele,
+    campos: [ {k:"largo", et:"Largo", def:6}, {k:"ancho", et:"Ancho", def:5}, {k:"corte_largo", et:"Corte largo", def:2.5}, {k:"corte_ancho", et:"Corte ancho", def:2} ] },
+  anillo:     { nombre: "Anillo", icon: IC.z_anillo,
+    campos: [ {k:"diametro_ext", et:"Diámetro ext.", def:6}, {k:"diametro_int", et:"Diámetro int.", def:2} ] },
+  ovalo:      { nombre: "Óvalo", icon: IC.z_ovalo,
+    campos: [ {k:"ancho", et:"Ancho", def:6}, {k:"alto", et:"Alto", def:4} ] },
+  hexagono:   { nombre: "Hexágono", icon: IC.z_hexagono,
+    campos: [ {k:"lado", et:"Lado", def:3} ] },
 };
 
 const FORMAS_PIEZA = {
@@ -471,6 +488,43 @@ function construirZona(forma, zm, escala, bb) {
     path.arc(cx, yt, r, 0, Math.PI);
     path.closePath();
     test = (px, py) => (((px - cx) ** 2 + (py - yt) ** 2) <= r * r) && (py >= yt);
+
+  } else if (forma === "ele") {
+    const cutW = Math.min((zm.corte_largo || 0) * escala, bb.w * 0.95);
+    const cutH = Math.min((zm.corte_ancho || 0) * escala, bb.h * 0.95);
+    const pts = [
+      [bb.x, bb.y], [bb.x + bb.w - cutW, bb.y], [bb.x + bb.w - cutW, bb.y + cutH],
+      [bb.x + bb.w, bb.y + cutH], [bb.x + bb.w, bb.y + bb.h], [bb.x, bb.y + bb.h],
+    ];
+    trazarPoligono(path, pts);
+    test = (px, py) => puntoEnPoligono(px, py, pts);
+
+  } else if (forma === "anillo") {
+    const cyc = bb.y + bb.h / 2;
+    const rExt = bb.w / 2;
+    const rInt = rExt * ((zm.diametro_int || 0) / (zm.diametro_ext || 1));
+    path.arc(cx, cyc, rExt, 0, Math.PI * 2);
+    path.moveTo(cx + rInt, cyc);
+    path.arc(cx, cyc, rInt, 0, Math.PI * 2, true); // sentido inverso: crea el hueco (regla nonzero)
+    test = (px, py) => {
+      const d2 = (px - cx) ** 2 + (py - cyc) ** 2;
+      return d2 <= rExt * rExt && d2 >= rInt * rInt;
+    };
+
+  } else if (forma === "ovalo") {
+    const rx = bb.w / 2, ry = bb.h / 2, cyc = bb.y + ry;
+    path.ellipse(cx, cyc, rx, ry, 0, 0, Math.PI * 2);
+    test = (px, py) => ((px - cx) ** 2) / (rx * rx) + ((py - cyc) ** 2) / (ry * ry) <= 1;
+
+  } else if (forma === "hexagono") {
+    const r = bb.w / 2, cyc = bb.y + bb.h / 2;
+    const pts = [];
+    for (let k = 0; k < 6; k++) {
+      const ang = (Math.PI / 180) * (60 * k);
+      pts.push([cx + r * Math.cos(ang), cyc + r * Math.sin(ang)]);
+    }
+    trazarPoligono(path, pts);
+    test = (px, py) => puntoEnPoligono(px, py, pts);
 
   } else {
     path.rect(bb.x, bb.y, bb.w, bb.h);
