@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora de Adoquines</title>
+
+  <!-- Tipografías de Google:
+       - Space Grotesk: títulos (técnico, geométrico)
+       - Inter: texto e interfaz (legible)
+       - Space Mono: números (sensación de "hoja de especificaciones") -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+
+  <!-- ===================== ENCABEZADO (titleblock) ===================== -->
+  <header class="titleblock">
+    <div class="titleblock__left">
+      <div class="titleblock__mark">▦</div>
+      <div>
+        <h1 class="titleblock__title">Calculadora de Adoquines</h1>
+        <p class="titleblock__sub">Estimación de piezas por área, forma y patrón</p>
+      </div>
+    </div>
+
+    <!-- Interruptor de sistema de unidades -->
+    <div class="unit-toggle" id="unitToggle" role="tablist" aria-label="Sistema de unidades">
+      <button class="unit-toggle__btn is-active" data-sistema="metrico" role="tab">
+        Métrico <span>m / cm</span>
+      </button>
+      <button class="unit-toggle__btn" data-sistema="imperial" role="tab">
+        Imperial <span>ft / in</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="layout">
+
+    <!-- ===================== PANEL DE CONTROL (izquierda) ===================== -->
+    <section class="panel" aria-label="Parámetros">
+
+      <!-- Moneda -->
+      <div class="field-group">
+        <div class="field-group__head">
+          <span class="field-group__num">01</span>
+          <h2 class="field-group__title">Moneda</h2>
+        </div>
+        <label class="field">
+          <span class="field__label">Moneda para el costo estimado</span>
+          <select id="moneda">
+            <option value="MXN">MXN — Peso mexicano ($)</option>
+            <option value="USD">USD — Dólar estadounidense (US$)</option>
+            <option value="EUR">EUR — Euro (€)</option>
+          </select>
+        </label>
+      </div>
+
+      <!-- Zonas (generadas dinámicamente por JS) -->
+      <div class="field-group">
+        <div class="field-group__head">
+          <span class="field-group__num">02</span>
+          <h2 class="field-group__title">Figuras a cubrir</h2>
+        </div>
+        <div id="zonaList"></div>
+      </div>
+
+    </section>
+
+    <!-- ===================== MESA DE DIBUJO (derecha) ===================== -->
+    <section class="board" aria-label="Vista del plano y resultados">
+
+      <!-- Lienzo / plano a escala -->
+      <div class="canvas-wrap">
+        <div class="canvas-topbar">
+          <div class="canvas-tag">VISTA DE PLANO · ilustrativa</div>
+          <div class="view-toggle" id="viewToggle">
+            <button class="view-toggle__btn is-active" data-vista="2d">2D</button>
+            <button class="view-toggle__btn" data-vista="2.5d">2.5D</button>
+          </div>
+        </div>
+        <canvas id="plano"></canvas>
+        <div class="canvas-error is-hidden" id="canvasError"></div>
+      </div>
+
+      <!-- Tarjetas de resultados (números en mono) -->
+      <div class="results" id="results">
+        <div class="result-card">
+          <span class="result-card__label">Área total</span>
+          <span class="result-card__value" id="rArea">—</span>
+        </div>
+        <div class="result-card">
+          <span class="result-card__label">Piezas mínimas</span>
+          <span class="result-card__value" id="rMin">—</span>
+          <span class="result-card__foot">sin desperdicio</span>
+        </div>
+        <div class="result-card result-card--hl">
+          <span class="result-card__label">Piezas recomendadas</span>
+          <span class="result-card__value" id="rRec">—</span>
+          <span class="result-card__foot" id="rRecFoot">con desperdicio</span>
+        </div>
+        <div class="result-card">
+          <span class="result-card__label">Piezas extra</span>
+          <span class="result-card__value" id="rExtra">—</span>
+          <span class="result-card__foot">solo para cortes</span>
+        </div>
+      </div>
+
+      <!-- Banda de costo total (visible solo cuando hay precio) -->
+      <div class="cost-strip is-hidden" id="costStrip">
+        <span class="cost-strip__total" id="costTotal">—</span>
+        <span class="cost-strip__sub" id="costSub"></span>
+      </div>
+
+      <!-- Resumen por figura -->
+      <div id="resumenFiguras"></div>
+
+      <p class="board__note">
+        El dibujo es una representación del patrón a escala. Las piezas sombreadas
+        en el borde indican dónde se realizarían cortes. El conteo se calcula
+        por área (método estándar de estimación).
+      </p>
+    </section>
+
+  </main>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+  <footer class="site-footer">
+    <p>Creado por <strong>David Emanuel Jauregui Aban</strong>, <strong>Christian de Jesus Hernandez Ruiz</strong> y <strong>Julian Azael Mex Dominguez</strong></p>
+  </footer>
+</body>
+</html>

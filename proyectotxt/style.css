@@ -1,0 +1,390 @@
+/* =========================================================================
+   Calculadora de Adoquines — estilos
+   Concepto visual: "mesa de dibujo / plano de ingeniería".
+   - Tipografía mono para los números (sensación de hoja técnica).
+   - Paleta: concreto claro, slate profundo, terracota de adoquín, teal blueprint.
+   ========================================================================= */
+
+:root {
+  /* Colores base */
+  --bg: #ECEAE5;        /* fondo de página: concreto cálido claro */
+  --ink: #1B2A2E;       /* texto y estructura: slate profundo */
+  --ink-soft: #5A6B6E;  /* texto secundario */
+  --board: #16211C;     /* lienzo: slate-verde oscuro (mesa de dibujo) */
+  --clay: #C8643C;      /* acento: terracota de adoquín */
+  --clay-soft: #D98B5F;
+  --steel: #3F6B6E;     /* azul-verde tipo blueprint */
+  --sand: #D9B98A;      /* color de junta / arena */
+  --line: #C9C4B8;      /* líneas divisorias suaves */
+  --card: #F4F2EC;      /* tarjetas y campos */
+  --white: #FBFAF6;
+
+  --radius: 10px;
+  --radius-sm: 7px;
+  --shadow: 0 1px 2px rgba(27, 42, 46, .06), 0 8px 24px rgba(27, 42, 46, .06);
+
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===================== ENCABEZADO ===================== */
+.titleblock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 22px;
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+.titleblock__left { display: flex; align-items: center; gap: 14px; }
+.titleblock__mark {
+  font-size: 26px;
+  color: var(--clay);
+  line-height: 1;
+}
+.titleblock__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.titleblock__sub {
+  margin: 1px 0 0;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+
+/* Interruptor de unidades */
+.unit-toggle {
+  display: inline-flex;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  gap: 3px;
+}
+.unit-toggle__btn {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 0;
+  border-radius: 5px;
+  padding: 7px 14px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.15;
+  transition: background .15s, color .15s;
+}
+.unit-toggle__btn span {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 400;
+  opacity: .7;
+}
+.unit-toggle__btn.is-active {
+  background: var(--ink);
+  color: var(--white);
+}
+
+/* ===================== LAYOUT ===================== */
+.layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 22px;
+  padding: 22px;
+  max-width: 1280px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+/* ===================== PANEL DE CONTROL ===================== */
+.panel {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 6px 18px 18px;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 16px;
+}
+
+.field-group {
+  padding: 16px 0;
+  border-bottom: 1px dashed var(--line);
+}
+.field-group:last-child { border-bottom: 0; }
+.field-group__head {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  margin-bottom: 12px;
+}
+.field-group__num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--clay);
+  letter-spacing: .04em;
+}
+.field-group__title {
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.field { display: block; margin-bottom: 12px; }
+.field:last-child { margin-bottom: 0; }
+.field__label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+
+.dims { display: flex; gap: 10px; }
+.field--inline { flex: 1; margin-bottom: 0; }
+
+input[type="number"] {
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 9px 11px;
+  transition: border-color .15s, box-shadow .15s;
+}
+input[type="number"]:focus {
+  outline: 0;
+  border-color: var(--steel);
+  box-shadow: 0 0 0 3px rgba(63, 107, 110, .15);
+}
+
+/* Selector segmentado (forma del terreno) */
+.seg {
+  display: inline-flex;
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  gap: 3px;
+}
+.seg__btn {
+  flex: 1;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 0;
+  border-radius: 5px;
+  padding: 8px;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.seg__btn.is-active { background: var(--ink); color: var(--white); }
+
+/* Selector de forma del adoquín (con iconos) */
+.shape-pick { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.shape-pick__btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 6px 9px;
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  transition: border-color .15s, background .15s, color .15s;
+}
+.shape-pick__btn svg { width: 34px; height: 34px; }
+.shape-pick__btn svg rect,
+.shape-pick__btn svg polygon { fill: var(--ink-soft); transition: fill .15s; }
+.shape-pick__btn.is-active {
+  border-color: var(--clay);
+  background: #fff;
+  color: var(--ink);
+}
+.shape-pick__btn.is-active svg rect,
+.shape-pick__btn.is-active svg polygon { fill: var(--clay); }
+
+/* Selector de patrón (miniaturas dibujadas en canvas) */
+.pattern-pick { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.pattern-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 7px;
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+.pattern-btn canvas {
+  width: 100%;
+  height: 58px;
+  border-radius: 4px;
+  display: block;
+}
+.pattern-btn span {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-align: center;
+}
+.pattern-btn.is-active { border-color: var(--clay); background: #fff; }
+.pattern-btn.is-active span { color: var(--ink); }
+
+/* Deslizador de desperdicio */
+.hint {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--clay);
+  float: right;
+  font-weight: 700;
+}
+.slider-row { display: flex; align-items: center; gap: 12px; }
+.slider-row input[type="range"] {
+  flex: 1;
+  accent-color: var(--clay);
+  cursor: pointer;
+}
+.slider-row__val { display: flex; align-items: center; gap: 4px; }
+.slider-row__val input { width: 58px; text-align: center; }
+.slider-row__val span { font-family: var(--font-mono); font-size: 13px; color: var(--ink-soft); }
+
+/* ===================== MESA DE DIBUJO ===================== */
+.board { display: flex; flex-direction: column; gap: 18px; }
+
+.canvas-wrap {
+  position: relative;
+  background: var(--board);
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: var(--shadow);
+  min-height: 380px;
+}
+.canvas-tag {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .12em;
+  color: rgba(255, 255, 255, .42);
+  z-index: 2;
+}
+#plano { width: 100%; height: auto; display: block; }
+
+.canvas-error {
+  position: absolute;
+  inset: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: rgba(22, 33, 28, .92);
+  color: var(--clay-soft);
+  font-size: 14px;
+  padding: 24px;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+}
+
+/* Tarjetas de resultados */
+.results { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.result-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.result-card__label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+.result-card__value {
+  font-family: var(--font-mono);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.1;
+}
+.result-card__foot { font-size: 11px; color: var(--ink-soft); }
+.result-card--hl {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+.result-card--hl .result-card__label { color: var(--sand); }
+.result-card--hl .result-card__value { color: var(--white); }
+.result-card--hl .result-card__foot { color: rgba(255, 255, 255, .6); }
+
+.board__note {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* Animación suave al actualizar tarjetas */
+@keyframes pop {
+  from { transform: translateY(3px); opacity: .4; }
+  to   { transform: translateY(0);   opacity: 1; }
+}
+.result-card__value.is-updated { animation: pop .25s ease; }
+
+/* ===================== UTILIDADES ===================== */
+.is-hidden { display: none !important; }
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 880px) {
+  .layout { grid-template-columns: 1fr; }
+  .panel { position: static; }
+  .results { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 460px) {
+  .results { grid-template-columns: 1fr; }
+  .shape-pick { grid-template-columns: 1fr; }
+}
+
+/* Respeta a quien prefiere menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}

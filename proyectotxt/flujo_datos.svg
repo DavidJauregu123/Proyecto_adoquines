@@ -1,0 +1,63 @@
+<svg viewBox="0 0 920 540" xmlns="http://www.w3.org/2000/svg" font-family="'Inter', system-ui, sans-serif">
+  <rect width="920" height="540" fill="#ECEAE5"/>
+
+  <!-- Titulo -->
+  <text x="40" y="48" font-family="'Space Grotesk', sans-serif" font-size="26" font-weight="700" fill="#1B2A2E">¿Cómo se conectan las piezas?</text>
+  <text x="40" y="74" font-size="14" fill="#5A6B6E">El navegador dibuja y pregunta; Python piensa y responde.</text>
+
+  <!-- ====== Panel NAVEGADOR ====== -->
+  <rect x="40" y="110" width="360" height="380" rx="14" fill="#FBFAF6" stroke="#C9C4B8"/>
+  <rect x="40" y="110" width="360" height="40" rx="14" fill="#3F6B6E"/>
+  <rect x="40" y="136" width="360" height="14" fill="#3F6B6E"/>
+  <text x="60" y="137" font-family="'Space Mono', monospace" font-size="14" font-weight="700" fill="#fff">NAVEGADOR  ·  la cara visible</text>
+  <text x="60" y="172" font-size="13" fill="#5A6B6E">HTML + CSS + JavaScript</text>
+
+  <!-- Cajas internas navegador -->
+  <rect x="64" y="190" width="312" height="56" rx="8" fill="#F4F2EC" stroke="#C9C4B8"/>
+  <text x="80" y="214" font-size="14" font-weight="600" fill="#1B2A2E">1 · Formulario</text>
+  <text x="80" y="233" font-size="12" fill="#5A6B6E">medidas, forma, patrón, desperdicio</text>
+
+  <rect x="64" y="258" width="312" height="56" rx="8" fill="#F4F2EC" stroke="#C9C4B8"/>
+  <text x="80" y="282" font-size="14" font-weight="600" fill="#1B2A2E">2 · Empaqueta los datos (JSON)</text>
+  <text x="80" y="301" font-size="12" fill="#5A6B6E">y los envía con “fetch”</text>
+
+  <rect x="64" y="380" width="312" height="86" rx="8" fill="#F4F2EC" stroke="#C9C4B8"/>
+  <text x="80" y="404" font-size="14" font-weight="600" fill="#1B2A2E">4 · Muestra el resultado</text>
+  <text x="80" y="423" font-size="12" fill="#5A6B6E">• números en las tarjetas</text>
+  <text x="80" y="441" font-size="12" fill="#5A6B6E">• dibuja el plano en el lienzo</text>
+  <text x="80" y="459" font-size="12" fill="#5A6B6E">  (reglas, patrón, cortes)</text>
+
+  <!-- ====== Panel SERVIDOR ====== -->
+  <rect x="520" y="110" width="360" height="380" rx="14" fill="#FBFAF6" stroke="#C9C4B8"/>
+  <rect x="520" y="110" width="360" height="40" rx="14" fill="#C8643C"/>
+  <rect x="520" y="136" width="360" height="14" fill="#C8643C"/>
+  <text x="540" y="137" font-family="'Space Mono', monospace" font-size="14" font-weight="700" fill="#fff">SERVIDOR  ·  el cerebro</text>
+  <text x="540" y="172" font-size="13" fill="#5A6B6E">Python + Flask  (app.py)</text>
+
+  <rect x="544" y="190" width="312" height="56" rx="8" fill="#F4F2EC" stroke="#C9C4B8"/>
+  <text x="560" y="214" font-size="14" font-weight="600" fill="#1B2A2E">Recibe en /api/calcular</text>
+  <text x="560" y="233" font-size="12" fill="#5A6B6E">revisa que los datos sean válidos</text>
+
+  <rect x="544" y="258" width="312" height="100" rx="8" fill="#F4F2EC" stroke="#C9C4B8"/>
+  <text x="560" y="282" font-size="14" font-weight="600" fill="#1B2A2E">3 · Calcula (en metros)</text>
+  <text x="560" y="301" font-size="12" fill="#5A6B6E">• área del terreno y del adoquín</text>
+  <text x="560" y="319" font-size="12" fill="#5A6B6E">• cantidad exacta ÷ desperdicio</text>
+  <text x="560" y="337" font-size="12" fill="#5A6B6E">• redondea UNA sola vez</text>
+
+  <rect x="544" y="402" width="312" height="64" rx="8" fill="#1B2A2E"/>
+  <text x="560" y="428" font-size="14" font-weight="600" fill="#fff">Devuelve el resultado (JSON)</text>
+  <text x="560" y="448" font-family="'Space Mono', monospace" font-size="11" fill="#D9B98A">cantidad, área, geometría…</text>
+
+  <!-- ====== Flechas entre paneles ====== -->
+  <!-- ida -->
+  <path d="M 400 286 L 510 286" stroke="#3F6B6E" stroke-width="3" fill="none" marker-end="url(#flechaT)"/>
+  <text x="412" y="278" font-size="11" font-family="'Space Mono', monospace" fill="#3F6B6E">envía datos →</text>
+  <!-- vuelta -->
+  <path d="M 510 426 L 400 426" stroke="#C8643C" stroke-width="3" fill="none" marker-end="url(#flechaC)"/>
+  <text x="412" y="446" font-size="11" font-family="'Space Mono', monospace" fill="#C8643C">← regresa resultado</text>
+
+  <defs>
+    <marker id="flechaT" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#3F6B6E"/></marker>
+    <marker id="flechaC" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#C8643C"/></marker>
+  </defs>
+</svg>

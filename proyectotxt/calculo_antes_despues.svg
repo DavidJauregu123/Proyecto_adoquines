@@ -1,0 +1,60 @@
+<svg viewBox="0 0 920 560" xmlns="http://www.w3.org/2000/svg" font-family="'Inter', system-ui, sans-serif">
+  <rect width="920" height="560" fill="#ECEAE5"/>
+  <text x="40" y="48" font-family="'Space Grotesk', sans-serif" font-size="26" font-weight="700" fill="#1B2A2E">El error del cálculo (y cómo se arregló)</text>
+  <text x="40" y="74" font-size="14" fill="#5A6B6E">Ejemplo: área 10.05 m², adoquín 0.02 m² (20×10 cm), desperdicio 10%.</text>
+
+  <!-- ===== Columna ANTES (incorrecto) ===== -->
+  <rect x="40" y="100" width="400" height="420" rx="14" fill="#FBFAF6" stroke="#C9C4B8"/>
+  <rect x="40" y="100" width="400" height="44" rx="14" fill="#9A4A2C"/>
+  <rect x="40" y="128" width="400" height="16" fill="#9A4A2C"/>
+  <text x="64" y="129" font-size="15" font-weight="700" fill="#fff">✗  MÉTODO VIEJO — redondea dos veces</text>
+
+  <!-- paso 1 -->
+  <rect x="64" y="166" width="352" height="74" rx="8" fill="#F4F2EC" stroke="#C9C4B8"/>
+  <text x="80" y="190" font-size="13" font-weight="600" fill="#1B2A2E">Paso 1: dividir y redondear</text>
+  <text x="80" y="212" font-family="'Space Mono', monospace" font-size="13" fill="#5A6B6E">10.05 ÷ 0.02 = 502.5</text>
+  <text x="80" y="231" font-family="'Space Mono', monospace" font-size="13" fill="#C8643C">ceil(502.5) = 503   ← 1er redondeo</text>
+
+  <!-- paso 2 -->
+  <rect x="64" y="256" width="352" height="92" rx="8" fill="#F4F2EC" stroke="#C9C4B8"/>
+  <text x="80" y="280" font-size="13" font-weight="600" fill="#1B2A2E">Paso 2: aplicar desperdicio al 503</text>
+  <text x="80" y="302" font-family="'Space Mono', monospace" font-size="13" fill="#5A6B6E">503 × 1.10 = 553.3</text>
+  <text x="80" y="321" font-family="'Space Mono', monospace" font-size="13" fill="#C8643C">ceil(553.3) = 554   ← 2º redondeo</text>
+  <text x="80" y="340" font-size="12" fill="#5A6B6E">el 0.5 de antes se infló y arrastró</text>
+
+  <!-- resultado -->
+  <rect x="64" y="372" width="352" height="64" rx="8" fill="#9A4A2C"/>
+  <text x="80" y="398" font-size="13" fill="#fff">Resultado</text>
+  <text x="384" y="414" font-family="'Space Mono', monospace" font-size="30" font-weight="700" fill="#fff" text-anchor="end">554</text>
+  <text x="80" y="416" font-size="12" fill="#F0D2C4">piezas (de más)</text>
+
+  <text x="64" y="470" font-size="12" fill="#5A6B6E">El problema: redondear, y luego volver a</text>
+  <text x="64" y="488" font-size="12" fill="#5A6B6E">redondear sobre ese número ya inflado.</text>
+  <text x="64" y="506" font-size="12" fill="#5A6B6E">El error se acumula en cada paso.</text>
+
+  <!-- ===== Columna DESPUÉS (correcto) ===== -->
+  <rect x="480" y="100" width="400" height="420" rx="14" fill="#FBFAF6" stroke="#C9C4B8"/>
+  <rect x="480" y="100" width="400" height="44" rx="14" fill="#2E5A3E"/>
+  <rect x="480" y="128" width="400" height="16" fill="#2E5A3E"/>
+  <text x="504" y="129" font-size="15" font-weight="700" fill="#fff">✓  MÉTODO NUEVO — redondea una vez</text>
+
+  <rect x="504" y="166" width="352" height="74" rx="8" fill="#F4F2EC" stroke="#C9C4B8"/>
+  <text x="520" y="190" font-size="13" font-weight="600" fill="#1B2A2E">Paso 1: dividir (sin redondear)</text>
+  <text x="520" y="212" font-family="'Space Mono', monospace" font-size="13" fill="#5A6B6E">10.05 ÷ 0.02 = 502.5</text>
+  <text x="520" y="231" font-family="'Space Mono', monospace" font-size="13" fill="#2E5A3E">guardamos 502.5 con decimales</text>
+
+  <rect x="504" y="256" width="352" height="92" rx="8" fill="#F4F2EC" stroke="#C9C4B8"/>
+  <text x="520" y="280" font-size="13" font-weight="600" fill="#1B2A2E">Paso 2: desperdicio sobre el exacto</text>
+  <text x="520" y="302" font-family="'Space Mono', monospace" font-size="13" fill="#5A6B6E">502.5 × 1.10 = 552.75</text>
+  <text x="520" y="321" font-family="'Space Mono', monospace" font-size="13" fill="#2E5A3E">ceil(552.75) = 553  ← único redondeo</text>
+  <text x="520" y="340" font-size="12" fill="#5A6B6E">redondeamos solo al final</text>
+
+  <rect x="504" y="372" width="352" height="64" rx="8" fill="#2E5A3E"/>
+  <text x="520" y="398" font-size="13" fill="#fff">Resultado</text>
+  <text x="824" y="414" font-family="'Space Mono', monospace" font-size="30" font-weight="700" fill="#fff" text-anchor="end">553</text>
+  <text x="520" y="416" font-size="12" fill="#CFE3D5">piezas (correcto)</text>
+
+  <text x="504" y="470" font-size="12" fill="#5A6B6E">La regla: trabajar con el número exacto</text>
+  <text x="504" y="488" font-size="12" fill="#5A6B6E">todo el tiempo y redondear hacia arriba</text>
+  <text x="504" y="506" font-size="12" fill="#5A6B6E">una sola vez (no se compran fracciones).</text>
+</svg>

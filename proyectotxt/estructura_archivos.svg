@@ -1,0 +1,62 @@
+<svg viewBox="0 0 920 600" xmlns="http://www.w3.org/2000/svg" font-family="'Inter', system-ui, sans-serif">
+  <rect width="920" height="600" fill="#ECEAE5"/>
+  <text x="40" y="48" font-family="'Space Grotesk', sans-serif" font-size="26" font-weight="700" fill="#1B2A2E">Estructura del proyecto</text>
+  <text x="40" y="74" font-size="14" fill="#5A6B6E">Qué hace cada archivo y para qué sirve.</text>
+
+  <!-- Tarjeta del árbol -->
+  <rect x="40" y="104" width="400" height="456" rx="14" fill="#16211C"/>
+  <text x="64" y="140" font-family="'Space Mono', monospace" font-size="14" fill="#7FA8AB">calculadora-adoquines/</text>
+
+  <!-- entradas del árbol (mono) -->
+  <g font-family="'Space Mono', monospace" font-size="13.5">
+    <text x="80" y="178" fill="#C8643C" font-weight="700">app.py</text>
+    <text x="80" y="214" fill="#D9B98A">requirements.txt</text>
+    <text x="80" y="250" fill="#D9B98A">Dockerfile</text>
+    <text x="80" y="286" fill="#D9B98A">.dockerignore</text>
+
+    <text x="80" y="322" fill="#7FA8AB">templates/</text>
+    <text x="104" y="346" fill="#fff">index.html</text>
+
+    <text x="80" y="382" fill="#7FA8AB">static/</text>
+    <text x="104" y="406" fill="#7FA8AB">css/</text>
+    <text x="128" y="430" fill="#fff">style.css</text>
+    <text x="104" y="454" fill="#7FA8AB">js/</text>
+    <text x="128" y="478" fill="#fff">app.js</text>
+
+    <text x="80" y="514" fill="#7FA8AB">docs/</text>
+    <text x="104" y="538" fill="#fff">DOCUMENTACION.md</text>
+  </g>
+
+  <!-- Conectores a las explicaciones -->
+  <g stroke="#C9C4B8" stroke-width="1.5" fill="none">
+    <path d="M 240 174 L 470 174"/>
+    <path d="M 240 342 L 470 300"/>
+    <path d="M 240 426 L 470 372"/>
+    <path d="M 240 474 L 470 444"/>
+    <path d="M 240 534 L 470 516"/>
+  </g>
+
+  <!-- Explicaciones -->
+  <g>
+    <rect x="470" y="150" width="410" height="68" rx="8" fill="#FBFAF6" stroke="#C8643C" stroke-width="1.5"/>
+    <text x="486" y="174" font-size="14" font-weight="700" fill="#1B2A2E">El cerebro (cálculo + servidor)</text>
+    <text x="486" y="194" font-size="12.5" fill="#5A6B6E">Toda la matemática corregida y la API</text>
+    <text x="486" y="210" font-size="12.5" fill="#5A6B6E">/api/calcular viven aquí.</text>
+
+    <rect x="470" y="276" width="410" height="56" rx="8" fill="#FBFAF6" stroke="#C9C4B8"/>
+    <text x="486" y="300" font-size="14" font-weight="700" fill="#1B2A2E">La estructura de la página</text>
+    <text x="486" y="320" font-size="12.5" fill="#5A6B6E">El formulario, el lienzo y las tarjetas.</text>
+
+    <rect x="470" y="348" width="410" height="56" rx="8" fill="#FBFAF6" stroke="#C9C4B8"/>
+    <text x="486" y="372" font-size="14" font-weight="700" fill="#1B2A2E">La apariencia (colores, tipos)</text>
+    <text x="486" y="392" font-size="12.5" fill="#5A6B6E">Estilo “mesa de dibujo / plano”.</text>
+
+    <rect x="470" y="420" width="410" height="56" rx="8" fill="#FBFAF6" stroke="#C9C4B8"/>
+    <text x="486" y="444" font-size="14" font-weight="700" fill="#1B2A2E">La acción del navegador</text>
+    <text x="486" y="464" font-size="12.5" fill="#5A6B6E">Pregunta a Python y dibuja el plano.</text>
+
+    <rect x="470" y="492" width="410" height="56" rx="8" fill="#FBFAF6" stroke="#C9C4B8"/>
+    <text x="486" y="516" font-size="14" font-weight="700" fill="#1B2A2E">Esta documentación</text>
+    <text x="486" y="536" font-size="12.5" fill="#5A6B6E">Explicación e imágenes del proyecto.</text>
+  </g>
+</svg>
